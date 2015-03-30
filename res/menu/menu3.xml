@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dip"
+    android:background="@color/gris" >
+
+    <TextView
+        android:id="@+id/menu_title_text"
+        android:text="AndroScope"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/noir"/>
+
+    <ImageView
+        android:id="@+id/menu_config"
+        android:src="@drawable/ic_menu_moreoverflow_normal_holo_light"
+        android:layout_width="40dip"
+        android:layout_height="fill_parent"       
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dip" />  
+    <ImageView
+        android:id="@+id/menu_prev"
+        android:src="@android:drawable/ic_media_rew"        
+        android:layout_width="40dip"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@+id/menu_config"
+        android:layout_marginLeft="10dip" />        
+
+    <ImageView
+        android:id="@+id/menu_next"
+        android:src="@android:drawable/ic_media_ff"
+        android:layout_width="40dip"
+        android:layout_height="fill_parent"  
+        android:layout_toLeftOf="@+id/menu_image"
+        android:layout_marginRight="10dip" />
+    <ImageView
+        android:id="@+id/menu_image"
+        android:src="@android:drawable/ic_menu_gallery"
+        android:layout_width="40dip"
+        android:layout_height="fill_parent"       
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dip" />        
+
+</RelativeLayout>

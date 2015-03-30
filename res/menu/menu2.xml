@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/menu_help"
+        android:icon="@android:drawable/ic_menu_help"
+        android:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/menu_prev"
+        android:icon="@android:drawable/ic_media_rew"        
+        android:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/menu_next"
+        android:icon="@android:drawable/ic_media_ff"
+        android:showAsAction="ifRoom"
+        />
+
+</menu>
