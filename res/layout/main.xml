@@ -11,43 +11,59 @@
     	android:background="@drawable/layout_left"
 	    android:layout_width="100dip"
 	    android:layout_height="fill_parent"
-	    android:layout_marginTop="20dip" 
-	    android:layout_marginBottom="20dip"
+
 	    android:visibility="visible"  > 
 	    <ImageButton
-	    	android:id="@+id/crayon"
+	    	android:id="@+id/button_crayon"
 	    	android:src="@android:drawable/ic_menu_edit"
 	    	android:background="@drawable/button_radius_corner"
 	    	android:layout_width="40dip"
 	    	android:layout_height="40dip"
-	    	android:layout_marginTop="10dip" 
+	    	android:layout_marginTop="30dip" 
 	    	android:layout_marginLeft="5dip" 
       		android:layout_marginRight="5dip"  /> 
 	    <ImageButton
-	    	android:id="@+id/gomme"
-	    	android:src="@android:drawable/ic_menu_delete"
+	    	android:id="@+id/button_gomme"
+	    	android:src="@drawable/eraser"
 	    	android:background="@drawable/button_radius_corner"
 	    	android:layout_width="40dip"
 	    	android:layout_height="40dip"
-	    	android:layout_toRightOf="@+id/crayon"
-	    	android:layout_marginTop="10dip" 
+	    	android:layout_toRightOf="@+id/button_crayon"
+	    	android:layout_marginTop="30dip" 
 	    	android:layout_marginLeft="5dip" 
       		android:layout_marginRight="5dip"  />      		
         <SeekBar
             android:id="@+id/seek"
             android:layout_width="100dip"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/crayon"
+            android:layout_below="@+id/button_crayon"
+            android:layout_marginTop="20dip"
 			android:layout_marginLeft="5dip" 
             android:progress="20" />
-
+<!--        <io.github.eybon.AndroScope.ColorPicker
+		    android:id="@+id/picker"
+		    android:layout_width="300dip"
+		    android:layout_height="300dip"
+	    	android:layout_below="@+id/seek"
+	    	android:layout_marginTop="0dip" 
+	    	android:layout_marginLeft="5dip" 
+      		android:layout_marginRight="5dip"/> -->
 
 	</RelativeLayout> 	
 
 
 
 	<io.github.eybon.AndroScope.CustomView
+		android:id="@+id/drawingZone"
 		android:background="@color/blanc"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_toRightOf="@+id/layoutLeft"
+		android:layout_toLeftOf="@+id/layoutRight" />
+
+	<ImageView
+		android:id="@+id/view_video"
+		android:background="@android:color/transparent"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_toRightOf="@+id/layoutLeft"
@@ -57,21 +73,45 @@
 		android:id="@+id/button_hide"
 		android:layout_width="20dp"
 		android:layout_height="20dp"
-		android:background="@drawable/round_button"
+		android:background="@drawable/arrow_left"
 		android:layout_centerVertical="true"
 		android:layout_toRightOf="@+id/layoutLeft"/>	
 
-<!--    <LinearLayout
-    	android:orientation="horizontal"
+    <LinearLayout
+    	android:orientation="vertical"
     	android:id="@+id/layoutRight"
     	android:background="@drawable/layout_right"
 	    android:layout_width="50dip"
 	    android:layout_height="fill_parent"
-	    android:layout_alignParentRight="true"
-	    android:layout_marginTop="20dip" 
-	    android:layout_marginBottom="20dip" > 
-      		
-	</LinearLayout> -->
+	    android:layout_alignParentRight="true" > 
+      	<ImageButton
+	    	android:id="@+id/button_background"
+	    	android:src="@android:drawable/ic_menu_mapmode"
+	    	android:background="@drawable/button_radius_corner"
+	    	android:layout_width="40dip"
+	    	android:layout_height="40dip"
+	    	android:layout_marginTop="35dip" 
+	    	android:layout_marginLeft="5dip" 
+      		android:layout_marginRight="5dip"  /> 
+	    <ImageButton
+	    	android:id="@+id/button_oignons"
+	    	android:src="@android:drawable/ic_menu_view"
+	    	android:background="@drawable/button_radius_corner"
+	    	android:layout_width="40dip"
+	    	android:layout_height="40dip"
+	    	android:layout_marginTop="10dip" 
+	    	android:layout_marginLeft="5dip" 
+      		android:layout_marginRight="5dip"  /> 
+	    <ImageButton
+	    	android:id="@+id/button_play"
+	    	android:src="@android:drawable/ic_media_play"
+	    	android:background="@drawable/button_radius_corner"
+	    	android:layout_width="40dip"
+	    	android:layout_height="40dip"
+	    	android:layout_marginTop="10dip" 
+	    	android:layout_marginLeft="5dip" 
+      		android:layout_marginRight="5dip"  />       		      		
+	</LinearLayout> 
 
 </RelativeLayout>
 

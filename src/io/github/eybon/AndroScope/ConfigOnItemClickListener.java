@@ -31,6 +31,12 @@ public class ConfigOnItemClickListener implements OnItemClickListener {
         if(arg2==0){
             mainActivity.newProjectDialog();
         }
+        if(arg2==1){
+            mainActivity.loadingProject();
+        }
+        if(arg2==2){
+            mainActivity.savingProject();
+        }
        
     }
 
