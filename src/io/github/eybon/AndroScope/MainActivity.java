@@ -67,6 +67,8 @@ public class MainActivity extends Activity
     public final static String EXTRA_MESSAGE = "MESSAGE";
     public final static int REQUEST_LIST = 1;    
     public final static int RESULT_LIST = 2;
+    public final static int REQUEST_CAMERA = 3;    
+    public final static int REQUEST_CHOOSER = 4;    
 
     /** Called when the activity is first created. */
     @Override
@@ -318,17 +320,16 @@ public class MainActivity extends Activity
 				Intent pickVid = new Intent(Intent.ACTION_GET_CONTENT);
 				pickVid.addCategory(Intent.CATEGORY_OPENABLE);
 				pickVid.setType("video/*");
-				startActivityForResult(pickVid, 1);
+				startActivityForResult(pickVid, REQUEST_CHOOSER);
 			}
 		})
 		.setNegativeButton("Camera", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				Intent takeVid = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-				video = getOutputMediaFileUri(); // create a file to save the video
 				takeVid.putExtra(MediaStore.EXTRA_OUTPUT, video); // set the image file name
-				startActivityForResult(takeVid, 0);
-				//drawingZone.setVideo(video.getPath());
+				startActivityForResult(takeVid, REQUEST_CAMERA);
+				
 			}
 		});
 
@@ -345,37 +346,6 @@ public class MainActivity extends Activity
 		camera.setText("");
 	}
 
-	/** Create a file Uri for saving an image or video */
-	private Uri getOutputMediaFileUri(){
-		File f = getOutputMediaFile();
-		if (f != null) {
-			return Uri.fromFile(f);
-		}
-		return null;
-	}
-
-	/** Create a File for saving the video */
-	private File getOutputMediaFile(){
-		// To be safe, you should check that the SDCard is mounted
-		// using Environment.getExternalStorageState() before doing this.
-
-		File mediaStorageDir = new File(getApplicationContext().getFilesDir(), String.valueOf(R.string.app_name));
-		// This location works best if you want the created images to be shared
-		// between applications and persist after your app has been uninstalled.
-
-		// Create the storage directory if it does not exist
-		if (! mediaStorageDir.exists()){
-			if (! mediaStorageDir.mkdirs()){
-				Log.d(String.valueOf(R.string.app_name), "failed to create directory");
-				return null;
-			}
-		}
-		// Create a media file name
-		//String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
-		return new File(mediaStorageDir.getPath() +/* File.separator +"VID_"+ timeStamp +*/ ".mp4");
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_LIST || requestCode == REQUEST_LIST) {
@@ -383,6 +353,12 @@ public class MainActivity extends Activity
 				drawingZone.setCurrentImage(data.getExtras().getInt("result"));
 			}
 		}
+		if (requestCode == REQUEST_CAMERA || requestCode == REQUEST_CHOOSER) {
+			if (resultCode == RESULT_OK) {
+				String path = data.getDataString();
+				drawingZone.setVideo(path);
+			}
+		}		
 	}
 
 

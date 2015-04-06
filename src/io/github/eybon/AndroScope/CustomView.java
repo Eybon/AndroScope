@@ -188,7 +188,7 @@ public class CustomView extends View{
 			mBitmapPaint.setAlpha(150);
 			if(backgroundActivate == true){
 				if(metadata!=null){
-					int time = 250*indexCurrentImage;
+					int time = 1000000*indexCurrentImage;
 					Bitmap background = metadata.getFrameAtTime(time, MediaMetadataRetriever.OPTION_CLOSEST);
 					background = Bitmap.createScaledBitmap(background, widthView, heightView, true);
 					canvas.drawBitmap( background, 0, 0, mBitmapPaint);

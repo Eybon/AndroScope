@@ -1,22 +1,29 @@
 /home/antoine/Android/AndroScope/gen/io/github/eybon/AndroScope/R.java \
- : /home/antoine/Android/AndroScope/res/drawable-hdpi/button_radius_corner.xml \
+ : /home/antoine/Android/AndroScope/res/drawable-hdpi/crayon.png \
+/home/antoine/Android/AndroScope/res/drawable-hdpi/button_radius_corner.xml \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/ic_menu_moreoverflow_normal_holo_light.png \
+/home/antoine/Android/AndroScope/res/drawable-hdpi/chargement.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/icone2.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/ic_launcher.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/round_button.xml \
-/home/antoine/Android/AndroScope/res/drawable-hdpi/gomme.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/icone.png \
+/home/antoine/Android/AndroScope/res/drawable-hdpi/eraser.png \
+/home/antoine/Android/AndroScope/res/drawable-hdpi/arrow_left.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/icone3.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/layout_left.xml \
+/home/antoine/Android/AndroScope/res/drawable-hdpi/arrow_right.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/layout_right.xml \
+/home/antoine/Android/AndroScope/res/layout/chargement.xml \
 /home/antoine/Android/AndroScope/res/layout/main.xml \
+/home/antoine/Android/AndroScope/res/layout/ligne_list_activity.xml \
+/home/antoine/Android/AndroScope/res/layout/dialog.xml \
+/home/antoine/Android/AndroScope/res/layout/main_list_activity.xml \
 /home/antoine/Android/AndroScope/res/drawable-mdpi/ic_launcher.png \
 /home/antoine/Android/AndroScope/res/drawable-xhdpi/ic_launcher.png \
 /home/antoine/Android/AndroScope/res/drawable-ldpi/ic_launcher.png \
 /home/antoine/Android/AndroScope/res/values/strings.xml \
 /home/antoine/Android/AndroScope/res/values/colors.xml \
 /home/antoine/Android/AndroScope/res/values/styles.xml \
-/home/antoine/Android/AndroScope/res/menu/menu.xml \
-/home/antoine/Android/AndroScope/res/menu/menu2.xml \
+/home/antoine/Android/AndroScope/res/menu/menu_list_activity.xml \
 /home/antoine/Android/AndroScope/res/menu/menu3.xml \
 /home/antoine/Android/AndroScope/bin/AndroidManifest.xml \
