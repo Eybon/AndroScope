@@ -42,8 +42,11 @@ import android.graphics.drawable.AnimationDrawable;
 import android.widget.ImageView;
 import android.graphics.drawable.BitmapDrawable;
 
+import io.github.eybon.AndroScope.ColorPicker.ColorPicker;
+import io.github.eybon.AndroScope.ColorPicker.ColorPicker.OnColorChangedListener;
 
-public class MainActivity extends Activity
+
+public class MainActivity extends Activity implements OnColorChangedListener
 {
 
 	CustomView drawingZone;
@@ -63,6 +66,7 @@ public class MainActivity extends Activity
     private String nameRepository = "SavingData";
     private Boolean projectHaveName;
     private String nameProject;
+    private String pathVideo;
 
     public final static String EXTRA_MESSAGE = "MESSAGE";
     public final static int REQUEST_LIST = 1;    
@@ -90,21 +94,49 @@ public class MainActivity extends Activity
 
         if (savedInstanceState!=null){
             nameProject = savedInstanceState.getString("nameProject");
+            //pathVideo = savedInstanceState.getString("pathVideo");
             projectHaveName = true;
             drawingZone.loadImages(nameProject);
+            //drawingZone.setVideo(pathVideo);
         }
 
 		createListenerForButton();	
 		createActionBar();	
 		popUpWindowConfig = createPopUpWindowConfig();
 
+		ColorPicker picker = (ColorPicker) findViewById(R.id.picker);
+		//To get the color
+		picker.getColor();
+
+		//To set the old selected color u can do it like this
+		picker.setOldCenterColor(picker.getColor());
+		// adds listener to the colorpicker which is implemented
+		//in the activity
+		picker.setOnColorChangedListener(this);/*new OnColorChangedListener(){
+			@Override
+			public boolean onColorChanged(int color) {
+				drawingZone.setColor(color);
+			}	
+		});*/
+
+		//to turn of showing the old color
+		picker.setShowOldCenterColor(false);
     }
+
+	@Override
+	public void onColorChanged(int color) {
+		drawingZone.setColorPaint(color);
+	} 
 
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("nameProject", nameProject);
+        outState.putString("pathVideo",pathVideo);
     } 
 
+    /**
+	* Création des listeners pour les boutons de l'interface (panel de droite et de gauche)
+    */
     public void createListenerForButton(){
 
 		SeekBar sizePenBar = (SeekBar) findViewById(R.id.seek);
@@ -172,6 +204,9 @@ public class MainActivity extends Activity
 		}); 
     }
 
+    /**
+    * Création du menu symbolisé par les 3 points
+    */
    	public PopupWindow createPopUpWindowConfig() {
         // add items on the array dynamically
         // format is Company Name:: ID
@@ -234,17 +269,15 @@ public class MainActivity extends Activity
         return adapter;
     }    
 
-
+    /**
+    *	création de l'action bar personnalisé
+    */
 	public void createActionBar(){
 		mActionBar = getActionBar();
 		mActionBar.setDisplayShowHomeEnabled(false);
 		mActionBar.setDisplayShowTitleEnabled(false);
 
-		//LayoutInflater mInflater = LayoutInflater.from(this);
-		//View mCustomView = mInflater.inflate(R.menu.menu3, null);
-
 		mActionBar.setCustomView(R.menu.menu3);
-		//mActionBar.setCustomView(mCustomView);
 		mActionBar.setDisplayShowCustomEnabled(true);	
 
 		ImageView config = (ImageView) findViewById(R.id.menu_config);
@@ -267,7 +300,6 @@ public class MainActivity extends Activity
 		next.setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
-				//Toast.makeText(MainActivity.this, "Image suivante", Toast.LENGTH_SHORT).show();
 				drawingZone.nextImage();
 		    }
 		});	
@@ -281,17 +313,21 @@ public class MainActivity extends Activity
 				    intent.putExtra(EXTRA_MESSAGE, nameProject);
 				    startActivityForResult(intent, REQUEST_LIST);
 		    	}
-				//drawingZone.cleanImage();
 		    }
 		});	
 	}
 
+	/**
+	*	Méthode de gestion plein écran
+	* si la zone de dessin est en plein écran alors affiche les panels et l'action bar
+	* sinon ferme les panels et l'action bar, pour obtenir le plein ecran
+	*/
     public void setVisibilityOfSideLayout(){
 		RelativeLayout left = (RelativeLayout) findViewById(R.id.layoutLeft);
 		LinearLayout right = (LinearLayout) findViewById(R.id.layoutRight);
 		Button hide = (Button) findViewById(R.id.button_hide);
 
-    	if(visibiltyOfSideLayout==true){
+    	if(visibiltyOfSideLayout==true){ //Passage
 				left.setVisibility(View.GONE);
 				mActionBar.hide();
 				right.setVisibility(View.GONE);
@@ -308,11 +344,15 @@ public class MainActivity extends Activity
 
     }
 
+    /**
+    *	Création d'un nouveau projet (affiche un dialog permettant de selectionner une video)
+    */
 	public void newProjectDialog() {
 
 		projectHaveName = false;
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Nouveau Projet : ");
 
 		builder.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
 			@Override
@@ -335,17 +375,21 @@ public class MainActivity extends Activity
 
 		AlertDialog sourcesDialog = builder.create();
 		sourcesDialog.show();
-		sourcesDialog.getWindow().setLayout(130, 70);
+		//sourcesDialog.getWindow().setLayout(130, 70);
 
 		Button gallery = sourcesDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-		gallery.setCompoundDrawablesWithIntrinsicBounds(this.getResources().getDrawable(android.R.drawable.ic_menu_gallery), null, null, null);
+		gallery.setCompoundDrawablesWithIntrinsicBounds(null,this.getResources().getDrawable(android.R.drawable.ic_menu_gallery), null, null);
 		gallery.setText("");
 
 		Button camera = sourcesDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-		camera.setCompoundDrawablesWithIntrinsicBounds(this.getResources().getDrawable(android.R.drawable.ic_menu_camera), null, null, null);
+		camera.setCompoundDrawablesWithIntrinsicBounds(null,this.getResources().getDrawable(android.R.drawable.ic_menu_camera), null, null);
 		camera.setText("");
 	}
 
+	/**
+	*	Méthode qui gere les résultats des intents lancé par la MainActivity
+	*		(Intent de recuperation de video et intent vers la listImageActivity)
+	*/
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_LIST || requestCode == REQUEST_LIST) {
@@ -355,15 +399,18 @@ public class MainActivity extends Activity
 		}
 		if (requestCode == REQUEST_CAMERA || requestCode == REQUEST_CHOOSER) {
 			if (resultCode == RESULT_OK) {
-				String path = data.getDataString();
-				drawingZone.setVideo(path);
+				pathVideo = data.getDataString();
+				drawingZone.setVideo(pathVideo);
 			}
 		}		
 	}
 
-
+	/**
+	*	Méthode de sauvegarde du projet
+	* si le projet n'a jamais été sauvegardé lance une pop up demandant le nom du projet et le sauvegarde
+	* sinon sauvegarde le projet
+	*/
 	public void savingProject(){
-
 		if(projectHaveName==false){
 		    AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -395,10 +442,13 @@ public class MainActivity extends Activity
 		}
 		else{
 			drawingZone.saveImages();
-		}
- 	
+		}	
 	}
 
+	/**
+	*	Méthode de chargement d'un projet
+	* affiche la liste des projet existant et charge le projet choisi
+	*/
 	public void loadingProject(){
 
 		File dir = new File(this.getFilesDir(),this.nameRepository);       
@@ -420,6 +470,10 @@ public class MainActivity extends Activity
 
 	}
 
+	/**
+	*	Méthode qui lance une animation contenant les images du projet
+	* si l'animation n'est pas lancé la lance et sinon l'arrete
+	*/
 	public void playVideo(){
 		ImageButton but = (ImageButton) findViewById(R.id.button_play);
 

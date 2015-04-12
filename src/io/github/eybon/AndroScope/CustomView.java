@@ -57,6 +57,9 @@ public class CustomView extends View{
 
 	private MediaMetadataRetriever metadata;
 
+	/**
+	*	Initialisation des paramètres de la zone de dessin
+	*/
 	public void initDrawer(Context c){
 		context=c;
 		mPath = new Path();
@@ -64,7 +67,7 @@ public class CustomView extends View{
 		mPaint = new Paint();
 		mPaint.setAntiAlias(true);
 		mPaint.setDither(true);
-		mColor = Color.GREEN;
+		mColor = Color.BLACK;
 		mPaint.setColor(mColor);
 		mPaint.setStyle(Paint.Style.STROKE);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
@@ -105,6 +108,9 @@ public class CustomView extends View{
 		invalidate();
 	}
 
+	/**
+	*	Active/Desactive l'affichage de l'image de fond
+	*/
 	public void activateBackground(){
 		if( backgroundActivate == false){
 			backgroundActivate = true;
@@ -115,6 +121,9 @@ public class CustomView extends View{
 		invalidate();
 	}
 
+	/**
+	*	Active/Desactive l'affichage des pellures d'oignons
+	*/
 	public void activateOignons(){
 		if( oignonsActivate == false){
 			oignonsActivate = true;
@@ -125,11 +134,17 @@ public class CustomView extends View{
 		invalidate();
 	}
 
+	/**
+	*	Choisi si on affiche ou pas la zone de dessin
+	*/
 	public void setEmpty(Boolean b){
 		empty = b;
 		invalidate();
 	}
 
+	/**
+	*	Méthode qui passe à l'image suivante et la crée si elle n'existe pas 
+	*/
 	public void nextImage(){
 		indexCurrentImage++;
 		Log.d("DrawingZone", "--- Next Image ---");
@@ -146,6 +161,9 @@ public class CustomView extends View{
 		invalidate();
 	}
 
+	/**
+	*	Méthode qui passe à l'image précédente
+	*/
 	public void previousImage(){
 		if(indexCurrentImage-1 >= 0){
 			indexCurrentImage --;
@@ -155,6 +173,9 @@ public class CustomView extends View{
 		invalidate();
 	}
 
+	/**
+	*	Méthode qui gère le redimensionnement de la zone de dessin
+	*/
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		widthView=w;
@@ -179,6 +200,9 @@ public class CustomView extends View{
 		//mCanvas = new Canvas(mBitmap);
 	}
 
+	/**
+	*	Méthode qui gère le dessin
+	*/
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -188,9 +212,10 @@ public class CustomView extends View{
 			mBitmapPaint.setAlpha(150);
 			if(backgroundActivate == true){
 				if(metadata!=null){
-					int time = 1000000*indexCurrentImage;
-					Bitmap background = metadata.getFrameAtTime(time, MediaMetadataRetriever.OPTION_CLOSEST);
-					background = Bitmap.createScaledBitmap(background, widthView, heightView, true);
+					Bitmap background = Bitmap.createScaledBitmap(backgroundList.get(indexCurrentImage),widthView,heightView,true);
+					/*int time = 1000000*indexCurrentImage;
+					Bitmap background = backgroundList.get(indexCurrentImage);
+					background = Bitmap.createScaledBitmap(background, widthView, heightView, true);*/
 					canvas.drawBitmap( background, 0, 0, mBitmapPaint);
 				}
 			}
@@ -222,6 +247,9 @@ public class CustomView extends View{
 	private float mX, mY;
 	private static final float TOUCH_TOLERANCE = 4;
 
+	/**
+	* Gestion de l'attachement du doigt à l'ecran
+	*/
 	private void touch_start(float x, float y) {
 		mPath.reset();
 		mPath.moveTo(x, y);
@@ -229,6 +257,9 @@ public class CustomView extends View{
 		mY = y;
 	}
 
+	/**
+	* Gestion du mouvement du doigt sur l'ecran
+	*/
 	private void touch_move(float x, float y) {
 		float dx = Math.abs(x - mX);
 		float dy = Math.abs(y - mY);
@@ -239,6 +270,9 @@ public class CustomView extends View{
 		}
 	}
 
+	/**
+	* Gestion du detachement du doigt de l'ecran
+	*/
 	private void touch_up() {
 		mPath.lineTo(mX, mY);
 		// commit the path to our offscreen
@@ -247,6 +281,9 @@ public class CustomView extends View{
 		mPath.reset();
 	}
 
+	/**
+	*	Gestion des evenement pour le dessin 
+	*/
 	@Override
 	public boolean onTouchEvent(MotionEvent event){
 		float x = event.getX();
@@ -270,33 +307,59 @@ public class CustomView extends View{
 		return true;
 	}
 
+	/**
+	*	Setter de la couleur du crayon
+	*/
 	public void setColorPaint(int color){
 		mPaint.setColor(color);
 	}
 
+	/**
+	*	Setter de la taille du crayon
+	*/
 	public void setSizePaint(int size){
 		Log.d("DrawingZone", "SetSize value : "+size+"=====");
 		mPaint.setStrokeWidth(size);
 	}
 
+	/**
+	*	Setter de l'image courante de la zone dessin
+	*/
 	public void setCurrentImage(int val){
-		indexCurrentImage = val;
+		if(val<imageList.size()){
+			indexCurrentImage = val;
+		}
+		else{
+			indexCurrentImage = 0;
+		}
 	}
 
+	/**
+	*	Méthode qui active le crayon de la zone dessin
+	*/
 	public void activateCrayon(){
 		mPaint.setColor(mColor);
 	}
 
+	/**
+	*	Méthode qui active la gomme de la zone dessin
+	*/
 	public void activateGomme(){
 		mPaint.setColor(Color.WHITE);
 	}	
 
+	/**
+	*	Méthode qui sauvegarde les images de la zone dessin (appeler si le nom du projet est deja connu)
+	*/	
 	public void saveImages(){
 		for(int i = 0; i<imageList.size();i++){
 			storeImage(imageList.get(i),nameCurrentProject,nameImg+i);
 		}
 	}
 
+	/**
+	*   Méthode qui sauvegarde les images de la zone dessin
+	*/
 	public void saveImages(String nameProject){
 
 		nameCurrentProject = nameProject;
@@ -306,6 +369,9 @@ public class CustomView extends View{
 		}
 	}
 
+	/**
+	*	Méthode qui sauvegarde une image
+	*/
 	private boolean storeImage(Bitmap imageData, String nameProject, String filename) {          
 
 		//get path to external storage (SD card)
@@ -337,6 +403,9 @@ public class CustomView extends View{
 		return true;
 	}
 
+	/**
+	* Méthode qui charge les images d'un projet
+	*/
 	public void loadImages(String nameProject){
 
 		nameCurrentProject = nameProject;
@@ -367,11 +436,14 @@ public class CustomView extends View{
 		invalidate();
 	}
 
+	/**
+	* Méthode qui crée une animation à partir des images 
+	*/
 	public AnimationDrawable playImages(){
 
 	    AnimationDrawable animation = new AnimationDrawable();
 	    for(int i=0;i<imageList.size();i++){
-	    	animation.addFrame(new BitmapDrawable(imageList.get(i)) , 500);
+	    	animation.addFrame(new BitmapDrawable(imageList.get(i)) , 250);
 	    }
 	    animation.setOneShot(false);
 	    Log.v("Load","At playImages size : "+ imageList.size() +" animation : "+ animation.toString());
@@ -379,9 +451,21 @@ public class CustomView extends View{
 	    return animation;
 	}
 
+	/**
+	*	Setter pour la video du background
+	*/
 	public void setVideo(String path){
 		metadata = new MediaMetadataRetriever();
 		metadata.setDataSource(this.context, Uri.parse(path));
+
+		String value = metadata.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+		long videoLength = (Long.parseLong(value)/1000); //Returns milliseconds - divide by 1,000
+		//Video length = 30037ms - result is 30.037s
+
+		int time = 250000;
+		for(int i=0;i<8;i++){
+			backgroundList.add(metadata.getFrameAtTime(time*i, MediaMetadataRetriever.OPTION_CLOSEST));
+		}	
 	}
 
 

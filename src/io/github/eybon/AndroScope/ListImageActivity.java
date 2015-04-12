@@ -40,6 +40,9 @@ public class ListImageActivity extends Activity
 	private ActionBar mActionBar;
     private int imageClick ;
 
+    /**
+    *   création de l'activité
+    */
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
@@ -66,12 +69,18 @@ public class ListImageActivity extends Activity
         createActionBar();
     } 
 
+    /**
+    *   Méthode qui recupere le numero de l'image qui à été clické
+    */
     public void imageClicked(int value){
         Log.v("ListActivity","click : "+ value);
         imageClick = value;
         finish();
     }
 
+    /**
+    *   Méthode de gestion de la fin de l'activité
+    */
     @Override
     public void finish() {
         // Prepare data intent 
@@ -82,6 +91,9 @@ public class ListImageActivity extends Activity
         super.finish();
     }
 
+    /**
+    *   Création de l'action bar
+    */
     public void createActionBar(){
 		mActionBar = getActionBar();
 		mActionBar.setDisplayShowHomeEnabled(false);

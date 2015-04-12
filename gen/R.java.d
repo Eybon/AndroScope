@@ -6,6 +6,7 @@
 /home/antoine/Android/AndroScope/res/drawable-hdpi/icone2.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/ic_launcher.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/round_button.xml \
+/home/antoine/Android/AndroScope/res/drawable-hdpi/bowling.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/icone.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/eraser.png \
 /home/antoine/Android/AndroScope/res/drawable-hdpi/arrow_left.png \
@@ -21,6 +22,8 @@
 /home/antoine/Android/AndroScope/res/drawable-mdpi/ic_launcher.png \
 /home/antoine/Android/AndroScope/res/drawable-xhdpi/ic_launcher.png \
 /home/antoine/Android/AndroScope/res/drawable-ldpi/ic_launcher.png \
+/home/antoine/Android/AndroScope/res/values/dimens.xml \
+/home/antoine/Android/AndroScope/res/values/attrs.xml \
 /home/antoine/Android/AndroScope/res/values/strings.xml \
 /home/antoine/Android/AndroScope/res/values/colors.xml \
 /home/antoine/Android/AndroScope/res/values/styles.xml \
